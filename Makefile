@@ -48,15 +48,13 @@ ASDK?=$(ANDROID_SDK)
 ANDK?=$(ANDROID_NDK)
 # Android Platform
 APLATFORM?=android-9
-# Android toolchain version
-ANDROID_ABI?="4.6"
 
 ADB?=./$(ASDK)/platform-tools/adb 
 
 # WGET command
 WGET?=wget
 
-all:	fips_hmac
+all:	fips_hmac copy
 
 #
 # note: this script has not yet be placed in this location 
@@ -139,6 +137,13 @@ archive:
 		readme.txt darwin linux \
 		fipsld-crosscompile-fix  \
 		Makefile fips_hmac.c setenv-android-4.1.sh
+
+LIB_DIR=obj/local/armeabi/
+copy:
+	cd openssl-$(OPENSSL_VERSION); \
+	mkdir -p $(LIB_DIR); \
+	cp libcrypto.a $(LIB_DIR)/; \
+	cp libssl.a $(LIB_DIR)/; \
 
 clean:
 	rm -rf openssl-fips-$(OPENSSL_FIPS_VERSION)
