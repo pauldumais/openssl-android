@@ -1,7 +1,7 @@
 openssl-android
 ===============
 
-Modified OpenSSL build scripts for building on android.
+Modified OpenSSL build scripts for building for android.
 
 Original sources:
 http://wiki.openssl.org/index.php/FIPS_Library_and_Android
