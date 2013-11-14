@@ -39,15 +39,17 @@
 #
 
 # change these versions as required ...
-OPENSSL_FIPS_VERSION=2.0.2
-OPENSSL_VERSION=1.0.1c
+OPENSSL_FIPS_VERSION=2.0.5
+OPENSSL_VERSION=1.0.1e
 
 # Android SDK version
-ASDK?=android-sdk-linux
+ASDK?=$(ANDROID_SDK)
 # Android NDK version
-ANDK?=android-ndk-r8b
+ANDK?=$(ANDROID_NDK)
 # Android Platform
-APLATFORM?=android-14
+APLATFORM?=android-9
+# Android toolchain version
+ANDROID_ABI?="4.6"
 
 ADB?=./$(ASDK)/platform-tools/adb 
 
@@ -138,3 +140,7 @@ archive:
 		fipsld-crosscompile-fix  \
 		Makefile fips_hmac.c setenv-android-4.1.sh
 
+clean:
+	rm -rf openssl-fips-$(OPENSSL_FIPS_VERSION)
+	rm -rf openssl-$(OPENSSL_VERSION)
+	rm -rf fips
