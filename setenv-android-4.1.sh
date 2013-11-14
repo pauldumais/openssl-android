@@ -14,7 +14,7 @@ if [ -d android-ndk-r8c ]; then
 fi
 
 # Edit to reference the incore script (usually in ./util/)
-export FIPS_SIG=$PWD/openssl-fips-2.0.2/util/incore
+export FIPS_SIG=$PWD/openssl-fips-2.0.5/util/incore
 
 ARCH=`uname -m`
 for i in linux darwin
@@ -35,7 +35,7 @@ export RELEASE=2.6.37
 export SYSTEM=android
 export ARCH=arm
 export CROSS_COMPILE="arm-linux-androideabi-"
-export ANDROID_DEV="$ANDROID_NDK/platforms/android-14/arch-arm/usr"
+export ANDROID_DEV="$ANDROID_NDK/platforms/android-9/arch-arm/usr"
 export HOSTCC=gcc
 
 
