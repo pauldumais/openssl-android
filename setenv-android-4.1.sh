@@ -21,7 +21,7 @@ function environment_setup {
 	export SYSTEM=android
 	export HOSTCC=gcc
 
-	TOOLCHAIN=4.8
+	TOOLCHAIN=4.6
 	ANDROID_ABI=android-9 # Minimum supported version for x86
 			      # check the NDK platform folder for supported versions.
 
@@ -73,6 +73,12 @@ function environment_setup {
 		exit 1
 	fi
 	export ANDROID_DEV=$(readlink -f "$ANDROID_NDK/platforms/$ANDROID_ABI/arch-$ARCH/usr")
+	export CC=$CROSS_COMPILEgcc
+	export CXX=$CROSS_COMPILEg++
+	export LD=$CROSS_COMPILEld
+	export AR=$CROSS_COMPILEar
+	export RANLIB=$CROSS_COMPILEranlib
+	export STRIP=$CROSS_COMPILEstrip
 
 	HOST_ARCH=`uname -m`
 	for i in linux darwin

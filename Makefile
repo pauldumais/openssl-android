@@ -134,8 +134,9 @@ archive:
 		fipsld-crosscompile-fix  \
 		Makefile fips_hmac.c setenv-android-4.1.sh
 
-LIB_DIR=../obj/local/$(ARCH_ABI)/
+LIB_DIR="../obj/local/$(ARCH_ABI)/"
 copy:
+	echo "Copying to $(LIB_DIR)"
 	cd openssl-$(OPENSSL_VERSION); \
 	mkdir -p $(LIB_DIR); \
 	cp libcrypto.a $(LIB_DIR)/; \
