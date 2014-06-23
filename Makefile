@@ -49,7 +49,6 @@ ANDK?=$(ANDROID_NDK)
 # Android Platform
 APLATFORM?=android-9
 # Androic architecture
-AARCH?=arm
 ADB?=./$(ASDK)/platform-tools/adb 
 
 # WGET command
@@ -115,7 +114,7 @@ libclean: openssl-$(OPENSSL_VERSION)/.done
 
 fips_hmac:	openssl-$(OPENSSL_VERSION)/.done fips_hmac.c
 	@echo "Building fips_hmac..."
-	$(CROSS_COMPILE)gcc -o fips_hmac fips_hmac.c -Iopenssl-$(OPENSSL_VERSION)/include/ -Lopenssl-$(OPENSSL_VERSION)/ -lcrypto -Iopenssl-$(OPENSSL_VERSION) -I$(ANDK)/platforms/$(APLATFORM)/arch-$(ARCH)/usr/include -B$(ANDK)/platforms/$(APLATFORM)/arch-arm/usr/lib
+	$(CROSS_COMPILE)gcc -o fips_hmac fips_hmac.c -Iopenssl-$(OPENSSL_VERSION)/include/ -Lopenssl-$(OPENSSL_VERSION)/ -lcrypto -Iopenssl-$(OPENSSL_VERSION) -I$(ANDK)/platforms/$(APLATFORM)/arch-$(ARCH)/usr/include -B$(ANDK)/platforms/$(APLATFORM)/arch-$(ARCH)/usr/lib
 
 test:	fips_hmac
 	@echo "Copy executable"
