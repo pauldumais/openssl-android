@@ -49,15 +49,15 @@ ANDK?=$(ANDROID_NDK)
 # Android Platform
 APLATFORM?=android-9
 
-ADB?=./$(ASDK)/platform-tools/adb 
+ADB?=./$(ASDK)/platform-tools/adb
 
 # WGET command
 WGET?=wget
 
-all:	fips_hmac copy
+all:	copy
 
 #
-# note: this script has not yet be placed in this location 
+# note: this script has not yet be placed in this location
 #
 fipsld-crosscompile-fix:
 	$(WGET) http://www.opensslfoundation.com/fips/2.0/platforms/android/fipsld-crosscompile-fix
@@ -65,21 +65,18 @@ fipsld-crosscompile-fix:
 fips_hmac.c:
 	$(WGET) http://www.opensslfoundation.com/fips/2.0/platforms/android/fips_hmac.c
 
-setenv-android-4.1.sh:
-	$(WGET) http://www.opensslfoundation.com/fips/2.0/platforms/android/setenv-android-4.1.sh
-
 openssl-fips-$(OPENSSL_FIPS_VERSION).tar.gz:
 	$(WGET) http://www.openssl.org/source/openssl-fips-$(OPENSSL_FIPS_VERSION).tar.gz
 
 openssl-$(OPENSSL_VERSION).tar.gz:
 	$(WGET) http://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
-fips/:	
+fips/:
 	mkdir fips
 
 fips/.done:	fips/ fipsld-crosscompile-fix openssl-fips-$(OPENSSL_FIPS_VERSION).tar.gz
 	gunzip -c openssl-fips-$(OPENSSL_FIPS_VERSION).tar.gz | tar xf -
-	. ./setenv-android-4.1.sh; \
+	. ./setenv-android-arm.sh; \
 	cd openssl-fips-$(OPENSSL_FIPS_VERSION); \
 	./config; \
 	make; \
@@ -92,9 +89,9 @@ fips/.done:	fips/ fipsld-crosscompile-fix openssl-fips-$(OPENSSL_FIPS_VERSION).t
 	# copy in the fixed fipsld which handles cross-compile environments
 	cp fipsld-crosscompile-fix fips/bin/fipsld
 
-openssl-$(OPENSSL_VERSION)/.done:	fips/.done openssl-$(OPENSSL_VERSION).tar.gz setenv-android-4.1.sh
+openssl-$(OPENSSL_VERSION)/.done:	fips/.done openssl-$(OPENSSL_VERSION).tar.gz setenv-android-arm.sh
 	gunzip -c openssl-$(OPENSSL_VERSION).tar.gz | tar xf -
-	. ./setenv-android-4.1.sh; \
+	. ./setenv-android-arm.sh; \
 	cd openssl-$(OPENSSL_VERSION)/; \
 	./config fips shared --with-fipsdir=$$PWD/../fips; \
 	make depend; \
@@ -102,20 +99,20 @@ openssl-$(OPENSSL_VERSION)/.done:	fips/.done openssl-$(OPENSSL_VERSION).tar.gz s
 	touch .done
 
 remake: openssl-$(OPENSSL_VERSION)/.done
-	. ./setenv-android-4.1.sh; \
+	. ./setenv-android-arm.sh; \
 	cd openssl-$(OPENSSL_VERSION)/; \
 	make; \
 	touch .done
 
 libclean: openssl-$(OPENSSL_VERSION)/.done
-	. ./setenv-android-4.1.sh; \
+	. ./setenv-android-arm.sh; \
 	cd openssl-$(OPENSSL_VERSION)/; \
 	make libclean; \
 	touch .done
 
 fips_hmac:	openssl-$(OPENSSL_VERSION)/.done fips_hmac.c
-	. ./setenv-android-4.1.sh; \
-	arm-linux-androideabi-gcc -o fips_hmac fips_hmac.c -Iopenssl-$(OPENSSL_VERSION)/include/ -Lopenssl-$(OPENSSL_VERSION)/ -lcrypto -Iopenssl-$(OPENSSL_VERSION) -I$(ANDK)/platforms/$(APLATFORM)/arch-arm/usr/include -B$(ANDK)/platforms/$(APLATFORM)/arch-arm/usr/lib
+	. ./setenv-android-arm.sh; \
+	$(CROSS_COMPILE)gcc -o fips_hmac fips_hmac.c -Iopenssl-$(OPENSSL_VERSION)/include/ -Lopenssl-$(OPENSSL_VERSION)/ -lcrypto -Iopenssl-$(OPENSSL_VERSION) -I$(ANDROID_SYSROOT)/usr/include -B$(ANDROID_SYSROOT)/usr/lib
 
 test:	fips_hmac
 	@echo "Copy executable"
@@ -136,16 +133,20 @@ archive:
 	tar zcvf android-build.tgz \
 		readme.txt darwin linux \
 		fipsld-crosscompile-fix  \
-		Makefile fips_hmac.c setenv-android-4.1.sh
+		Makefile fips_hmac.c setenv-android-arm.sh
 
-LIB_DIR=obj/local/armeabi/
-copy:
+copy: fips_hmac
 	cd openssl-$(OPENSSL_VERSION); \
-	mkdir -p $(LIB_DIR); \
-	cp libcrypto.a $(LIB_DIR)/; \
-	cp libssl.a $(LIB_DIR)/; \
+	mkdir -p ../lib; \
+	cp libcrypto.a ../lib/; \
+	cp libssl.a ../lib/; \
+	cp libcrypto.so.1.0.0 ../lib/; \
+	cp libssl.so.1.0.0 ../lib/; \
+	cp -r include ../
 
 clean:
 	rm -rf openssl-fips-$(OPENSSL_FIPS_VERSION)
 	rm -rf openssl-$(OPENSSL_VERSION)
+	rm -rf lib
+	rm -rf include
 	rm -rf fips
