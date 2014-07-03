@@ -190,19 +190,26 @@ fi
 #####################################################################
 
 # Most of these should be OK (MACHINE, SYSTEM, ARCH). RELEASE is ignored.
-export MACHINE=armv5el
-export RELEASE=2.6.37
-export SYSTEM=android
-export ARCH=arm
-export CROSS_COMPILE="arm-linux-androideabi-"
+case $_ANDROID_ARCH in
+  arch-arm)
+    export MACHINE=armv5el
+    export RELEASE=2.6.37
+    export SYSTEM=android
+    export ARCH=arm
+    export CROSS_COMPILE="arm-linux-androideabi-"
 
-if [ "$_ANDROID_ARCH" == "arch-x86" ]; then
-	export MACHINE=i686
-	export RELEASE=2.6.37
-	export SYSTEM=android
-	export ARCH=x86
-	export CROSS_COMPILE="i686-linux-android-"
-fi
+    ;;
+  arch-x86)
+    export MACHINE=i686
+    export RELEASE=2.6.37
+    export SYSTEM=android
+    export ARCH=x86
+    export CROSS_COMPILE="i686-linux-android-"
+    ;;
+	*)
+	  echo "ERROR ERROR ERROR"
+	  ;;
+esac
 
 # For the Android toolchain
 # https://android.googlesource.com/platform/ndk/+/ics-mr0/docs/STANDALONE-TOOLCHAIN.html

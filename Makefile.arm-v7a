@@ -74,6 +74,7 @@ openssl-$(OPENSSL_VERSION).tar.gz:
 fips/:
 	mkdir fips
 
+.PHONY: fips/.done
 fips/.done:	fips/ fipsld-crosscompile-fix openssl-fips-$(OPENSSL_FIPS_VERSION).tar.gz
 	gunzip -c openssl-fips-$(OPENSSL_FIPS_VERSION).tar.gz | tar xf -
 	. ./setenv-android-arm-v7a.sh; \
@@ -89,6 +90,7 @@ fips/.done:	fips/ fipsld-crosscompile-fix openssl-fips-$(OPENSSL_FIPS_VERSION).t
 	# copy in the fixed fipsld which handles cross-compile environments
 	cp fipsld-crosscompile-fix fips/bin/fipsld
 
+.PHONY: openssl-$(OPENSSL_VERSION)/.done
 openssl-$(OPENSSL_VERSION)/.done:	fips/.done openssl-$(OPENSSL_VERSION).tar.gz setenv-android-arm-v7a.sh
 	gunzip -c openssl-$(OPENSSL_VERSION).tar.gz | tar xf -
 	. ./setenv-android-arm-v7a.sh; \
@@ -135,18 +137,20 @@ archive:
 		fipsld-crosscompile-fix  \
 		Makefile fips_hmac.c setenv-android-arm-v7a.sh
 
+.PHONY: copy
 copy: fips_hmac
 	cd openssl-$(OPENSSL_VERSION); \
-	mkdir -p ../lib/; \
+	mkdir -p ../lib; \
 	cp libcrypto.a ../lib/; \
 	cp libssl.a ../lib/; \
 	cp libcrypto.so.1.0.0 ../lib/; \
 	cp libssl.so.1.0.0 ../lib/; \
 	cp -r include ../
 
+.PHONY: clean
 clean:
 	rm -rf openssl-fips-$(OPENSSL_FIPS_VERSION)
 	rm -rf openssl-$(OPENSSL_VERSION)
-	rm -rf lib
 	rm -rf include
+	rm -rf lib
 	rm -rf fips
