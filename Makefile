@@ -12,7 +12,7 @@
 
 #
 # for linux based building:
-#	openssl-fips-2.0.2
+#	openssl-fips-2.0.7
 #	openssl-1.0.1h
 #	android-ndk-r8b
 #	android-sdk-linux
@@ -39,7 +39,7 @@
 #
 
 # change these versions as required ...
-OPENSSL_FIPS_VERSION=2.0.5
+OPENSSL_FIPS_VERSION=2.0.7
 OPENSSL_VERSION=1.0.1h
 
 # Android SDK version
