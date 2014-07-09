@@ -81,7 +81,7 @@ fips/.done:	fips/ fipsld-crosscompile-fix openssl-fips-$(OPENSSL_FIPS_VERSION).t
 	gunzip -c openssl-fips-$(OPENSSL_FIPS_VERSION).tar.gz | tar xf -
 	. ./setenv-android-4.1.sh; \
 	cd openssl-fips-$(OPENSSL_FIPS_VERSION); \
-	./config; \
+	./config no-shared; \
 	make; \
 	make install INSTALLTOP=$$PWD/../fips; \
 	cd ..; touch $@
@@ -96,7 +96,7 @@ openssl-$(OPENSSL_VERSION)/.done:	fips/.done openssl-$(OPENSSL_VERSION).tar.gz s
 	gunzip -c openssl-$(OPENSSL_VERSION).tar.gz | tar xf -
 	. ./setenv-android-4.1.sh; \
 	cd openssl-$(OPENSSL_VERSION)/; \
-	./config fips shared --with-fipsdir=$$PWD/../fips; \
+	./config fips no-shared --with-fipsdir=$$PWD/../fips; \
 	make depend; \
 	make; \
 	touch .done
