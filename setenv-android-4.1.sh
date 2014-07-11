@@ -6,12 +6,12 @@
 
 #android-sdk-linux/platforms Edit this to wherever you unpacked the NDK
 
-if [ -d android-ndk-r8b ]; then
-  export ANDROID_NDK=$PWD/android-ndk-r8b
-fi
-if [ -d android-ndk-r8c ]; then
-  export ANDROID_NDK=$PWD/android-ndk-r8c
-fi
+for NDK in "android-ndk-r8b" "android-ndk-r8c" "android-ndk-r9d" "android-ndk-r9c"
+do
+  if [ -d $NDK ]; then
+    export ANDROID_NDK=$PWD/$NDK
+  fi
+done
 
 # Edit to reference the incore script (usually in ./util/)
 export FIPS_SIG=$PWD/openssl-fips-2.0.7/util/incore
