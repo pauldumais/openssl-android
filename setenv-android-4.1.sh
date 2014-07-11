@@ -6,7 +6,7 @@
 
 #android-sdk-linux/platforms Edit this to wherever you unpacked the NDK
 
-for NDK in "android-ndk-r8b" "android-ndk-r8c" "android-ndk-r9d" "android-ndk-r9c"
+for NDK in "android-ndk-r8b" "android-ndk-r8c" "android-ndk-r9c" "android-ndk-r9d"
 do
   if [ -d $NDK ]; then
     export ANDROID_NDK=$PWD/$NDK
@@ -16,11 +16,12 @@ done
 # Edit to reference the incore script (usually in ./util/)
 export FIPS_SIG=$PWD/openssl-fips-2.0.7/util/incore
 
-ARCH=`uname -m`
 for i in linux darwin
 do
+  ARCH="$(echo $ANDROID_NDK/prebuilt/$i-x86* | sed "s:$ANDROID_NDK/prebuilt/$i-::")"
   if [ -d $ANDROID_NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/$i-$ARCH/bin ]; then
     PATH=$ANDROID_NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/$i-$ARCH/bin:$PATH
+    break;
   fi
 done
 
