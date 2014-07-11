@@ -14,13 +14,13 @@ if [ -d android-ndk-r8c ]; then
 fi
 
 # Edit to reference the incore script (usually in ./util/)
-export FIPS_SIG=$PWD/openssl-fips-2.0.5/util/incore
+export FIPS_SIG=$PWD/openssl-fips-2.0.7/util/incore
 
 ARCH=`uname -m`
 for i in linux darwin
 do
-  if [ -d $ANDROID_NDK/toolchains/arm-linux-androideabi-4.6/prebuilt/$i-$ARCH/bin ]; then
-    PATH=$ANDROID_NDK/toolchains/arm-linux-androideabi-4.6/prebuilt/$i-$ARCH/bin:$PATH
+  if [ -d $ANDROID_NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/$i-$ARCH/bin ]; then
+    PATH=$ANDROID_NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/$i-$ARCH/bin:$PATH
   fi
 done
 
