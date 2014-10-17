@@ -33,14 +33,14 @@
 
 #
 # for cygwin based build:
-#	openssl-fips-2.0.2
-#	openssl-1.0.1h
+#	openssl-fips-2.0.8
+#	openssl-1.0.1j
 # 	TODO
 #
 
 # change these versions as required ...
-OPENSSL_FIPS_VERSION=2.0.7
-OPENSSL_VERSION=1.0.1i
+OPENSSL_FIPS_VERSION=2.0.8
+OPENSSL_VERSION=1.0.1j
 
 # Android SDK version
 ASDK?=$(ANDROID_SDK)
