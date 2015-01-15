@@ -39,8 +39,8 @@
 #
 
 # change these versions as required ...
-OPENSSL_FIPS_VERSION=2.0.7
-OPENSSL_VERSION=1.0.1h
+OPENSSL_FIPS_VERSION=2.0.9
+OPENSSL_VERSION=1.0.1k
 
 # Android SDK version
 ASDK?=$(ANDROID_SDK)
