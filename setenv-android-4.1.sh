@@ -14,7 +14,7 @@ do
 done
 
 # Edit to reference the incore script (usually in ./util/)
-export FIPS_SIG=$PWD/openssl-fips-2.0.7/util/incore
+export FIPS_SIG=$PWD/openssl-fips-2.0.9/util/incore
 
 for i in linux darwin
 do
