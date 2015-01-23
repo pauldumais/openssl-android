@@ -12,15 +12,15 @@
 
 #
 # for linux based building:
-#	openssl-fips-2.0.7
-#	openssl-1.0.1h
+#	openssl-fips-2.0.9
+#	openssl-1.0.1l
 #	android-ndk-r8b
 #	android-sdk-linux
 
 #
 # for macos based building:
-#	openssl-fips-2.0.2
-#	openssl-1.0.1h
+#	openssl-fips-2.0.9
+#	openssl-1.0.1l
 #	android-ndk-r8c
 #	android-sdk-macosx
 #
@@ -33,14 +33,14 @@
 
 #
 # for cygwin based build:
-#	openssl-fips-2.0.2
-#	openssl-1.0.1h
+#	openssl-fips-2.0.9
+#	openssl-1.0.1l
 # 	TODO
 #
 
 # change these versions as required ...
 OPENSSL_FIPS_VERSION=2.0.9
-OPENSSL_VERSION=1.0.1k
+OPENSSL_VERSION=1.0.1l
 
 # Android SDK version
 ASDK?=$(ANDROID_SDK)
