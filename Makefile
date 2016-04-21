@@ -13,14 +13,14 @@
 #
 # for linux based building:
 #	openssl-fips-2.0.7
-#	openssl-1.0.1h
+#	openssl-1.0.1s
 #	android-ndk-r8b
 #	android-sdk-linux
 
 #
 # for macos based building:
 #	openssl-fips-2.0.2
-#	openssl-1.0.1h
+#	openssl-1.0.1s
 #	android-ndk-r8c
 #	android-sdk-macosx
 #
@@ -34,7 +34,7 @@
 #
 # for cygwin based build:
 #	openssl-fips-2.0.2
-#	openssl-1.0.1h
+#	openssl-1.0.1s
 # 	TODO
 #
 
